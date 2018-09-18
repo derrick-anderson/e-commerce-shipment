@@ -16,14 +16,14 @@ public class ShipmentController {
         this.shipmentService = shipmentService;
     }
 
-    @GetMapping("/shipments/{shipmentId}")
-    public Shipment getOneShipment(@PathVariable("shipmentId") Long shipmentId){
-        return shipmentService.getOneShipment(shipmentId);
-    }
-
     @GetMapping("/shipments")
     public List<Shipment> getAllShipmentsForAccount(@RequestParam("accountId") Long accountId){
         return shipmentService.getAllShipmentsForAccount(accountId);
+    }
+
+    @GetMapping("/shipments/{shipmentId}")
+    public Shipment getOneShipment(@PathVariable("shipmentId") Long shipmentId){
+        return shipmentService.getOneShipment(shipmentId);
     }
 
     @PutMapping("/shipments/{shipmentId}")
