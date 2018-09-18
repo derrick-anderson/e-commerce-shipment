@@ -27,12 +27,12 @@ public class ShipmentController {
     }
 
     @PutMapping("/shipments/{shipmentId}")
-    public Shipment updateShipment(@PathVariable("shipmentId") Long shipmentId, Shipment shipmentUpdate){
+    public Shipment updateShipment(@PathVariable("shipmentId") Long shipmentId, @RequestBody Shipment shipmentUpdate){
         return shipmentService.updateShipment(shipmentId, shipmentUpdate);
     }
 
     @PostMapping("/shipments")
-    public Shipment createShipment(Shipment shipmentToSave){
+    public Shipment createShipment(@RequestBody Shipment shipmentToSave){
         return shipmentService.createShipment(shipmentToSave);
     }
 
