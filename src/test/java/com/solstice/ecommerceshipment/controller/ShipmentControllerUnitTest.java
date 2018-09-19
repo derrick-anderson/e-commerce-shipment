@@ -37,12 +37,13 @@ public class ShipmentControllerUnitTest {
     @MockBean
     private ShipmentService shipmentService;
 
+    @Autowired
     private ShipmentController shipmentController;
-
-    @Before
-    public void setup(){
-        shipmentController = new ShipmentController(shipmentService);
-    }
+//
+//    @Before
+//    public void setup(){
+//        shipmentController = new ShipmentController(shipmentService);
+//    }
 
     @Test
     public void getOneShipment_HappyPath() throws Exception {
@@ -88,7 +89,7 @@ public class ShipmentControllerUnitTest {
 
         mockMvc.perform(post("/shipments")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content("\"accountId\": 12, \"addressId\": 15"))
+                .content("{\"accountId\": 12, \"addressId\": 15}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists())
                 .andExpect(jsonPath("$.shipmentId", is(1)));

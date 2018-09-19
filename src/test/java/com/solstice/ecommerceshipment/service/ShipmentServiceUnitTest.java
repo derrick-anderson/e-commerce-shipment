@@ -1,10 +1,13 @@
 package com.solstice.ecommerceshipment.service;
 
+import com.solstice.ecommerceshipment.data.LineItemFeignProxy;
 import com.solstice.ecommerceshipment.data.ShipmentRepository;
 import com.solstice.ecommerceshipment.domain.Shipment;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -12,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -23,21 +27,25 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@AutoConfigureTestDatabase
 public class ShipmentServiceUnitTest {
 
     @MockBean
     private ShipmentRepository shipmentRepository;
 
+    @MockBean
+    private LineItemFeignProxy lineItemFeignProxy;
+
     private ShipmentService shipmentService;
 
     @Before
     public void setup(){
-        shipmentService = new ShipmentService(shipmentRepository);
+        shipmentService = new ShipmentService(shipmentRepository, lineItemFeignProxy);
     }
 
     @Test
     public void getOneShipment_HappyPath(){
-        when(shipmentRepository.getOne(15L)).thenReturn(getMockShipment(15L));
+        when(shipmentRepository.findById(15L)).thenReturn(Optional.of(getMockShipment(15L)));
 
         Shipment foundShipment = shipmentService.getOneShipment(15L);
 
@@ -64,7 +72,7 @@ public class ShipmentServiceUnitTest {
 
     @Test
     public void updateShipment_HappyPath(){
-        when(shipmentRepository.getOne(12L)).thenReturn(getMockShipment(12L));
+        when(shipmentRepository.findById(12L)).thenReturn(Optional.of(getMockShipment(12L)));
         Shipment shipmentUpdateData = new Shipment(null, null, LocalDate.of(2018,9,1));
 
         Shipment updatedShipment = shipmentService.updateShipment(12L, shipmentUpdateData);
@@ -75,7 +83,7 @@ public class ShipmentServiceUnitTest {
 
     @Test
     public void deleteShipment_HappyPath(){
-        when(shipmentRepository.getOne(12L)).thenReturn(getMockShipment(12L));
+        when(shipmentRepository.findById(12L)).thenReturn(Optional.of(getMockShipment(12L)));
 
         shipmentService.deleteShipment(12L);
 
