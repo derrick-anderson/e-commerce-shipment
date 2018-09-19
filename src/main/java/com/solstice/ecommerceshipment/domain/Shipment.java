@@ -1,5 +1,7 @@
 package com.solstice.ecommerceshipment.domain;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +17,8 @@ public class Shipment {
     private LocalDate shippedDate = LocalDate.now();
     private LocalDate deliveryDate;
     @Transient
-    private List<Object> lineItems;
+    @JsonRawValue
+    private String lineItems;
 
     public Shipment() {
     }
@@ -66,11 +69,11 @@ public class Shipment {
         this.deliveryDate = deliveryDate;
     }
 
-    public List<Object> getLineItems() {
+    public String getLineItems() {
         return lineItems;
     }
 
-    public void setLineItems(List<Object> lineItems) {
+    public void setLineItems(String lineItems) {
         this.lineItems = lineItems;
     }
 }
