@@ -10,6 +10,6 @@ applications:
    services:
       - e-commerce-shipment-db
       - e-commerce-service-registry
-      - e-commerce-hystrix-dasboard
+      - e-commerce-hystrix-dashboard
    env:
       JAVA_OPTS: '-Xss256K  -Xmx256m -Dserver.tomcat.max-threads=3 -Dspring.datasource.hikari.maximum-pool-size=2'
