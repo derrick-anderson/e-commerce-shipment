@@ -1,11 +1,15 @@
 ---
 applications:
 -  name: e-commerce-shipment
-   path: build/lib
+   path: build/lib/e-commerce-shipments-0.0.1-SNAPSHOT.jar
    buildpack: java_buildpack
    disk_quota: 512M
    memory: 512M
    routes:
-     - route: e-commerce-shipment-deanderson.cfapps.io
+      - route: e-commerce-shipment-deanderson.cfapps.io
+   services:
+      - e-commerce-shipment-db
+      - e-commerce-service-registry
+      - e-commerce-hystrix-dasboard
    env:
       JAVA_OPTS: '-Xss256K  -Xmx256m -Dserver.tomcat.max-threads=3 -Dspring.datasource.hikari.maximum-pool-size=2'
